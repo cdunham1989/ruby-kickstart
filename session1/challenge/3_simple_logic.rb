@@ -8,5 +8,9 @@
 # ten_twenty(6) # => 10
 
 def ten_twenty(n)
-  # your code goes here
+  if n.even?
+    return "10".to_i
+  else
+    return "20".to_i
+  end
 end
