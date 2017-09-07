@@ -8,3 +8,26 @@
 # staircase 4  # => {1 => [], 3 => [2]}
 # staircase 5  # => {1 => [], 3 => [2], 5 =>[2, 4]}
 
+def staircase(number)
+  result = {}
+
+  counter = 1
+
+  while counter <= number do
+    if counter.odd?
+      result[counter] = evens(counter)
+    end
+    counter += 1
+  end
+  result
+end
+
+def evens(upto)
+  evens = []
+  start = 2
+  while start < upto do
+    evens << start
+    start += 2
+  end
+  evens
+end
