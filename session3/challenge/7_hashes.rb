@@ -28,31 +28,42 @@ class HTMLTag
   FONTS = {
     :serif      => '"Times New Roman", "Georgia"',
     :sans_serif => '"Arial", "Verdana"',
-    :monospace  => '"Courier New", "Lucida Console"'
+    :monospace  => '"Courier New", "Lucida Console"',
   }
 
-  attr_accessor :name, :innerHTML, :options
+  COLORS = {
+    :red   => '#FF0000',
+    :green => '#00FF00',
+    :blue  => '#0000FF',
+  }
+
+  attr_accessor :name, :innerHTML, :font, :color, :multiline
 
   # options: :multiline should be true or false
-  def initialize(name, innerHTML, options)
-    @name, @innerHTML, @options = name, innerHTML, options
-  end
-
-  def font
-    font = options[:font]  #  one of :serif, :sans_serif, or :monospace
-    FONTS[font]
+  def initialize(name, innerHTML, options=Hash.new)
+    @name, @innerHTML = name, innerHTML
+    self.font      = FONTS[options[:font]]
+    #this line looks inside the options hash for the key :font value. Then uses the returned value as a key to find :serif(or :sans_serif or :monospace) from within the FONTS hash.
+    self.color     = COLORS[options[:color]]
+    self.multiline = options.fetch :multiline, false
+    #this line is telling it to look inside the hash for the key :multiline, and if it doesn't find one to set it as false.
   end
 
   def style
-    return nil unless options[:font]
-    "style='font-family:#{font}'"
+    return nil unless font || color
+    to_return = "style='"
+    to_return << "font-family:#{font};" if font
+    to_return << "color:#{color};"      if color
+    to_return << "'"
+    to_return
   end
 
   def to_s
-    line_end = if options[:multiline] then "\n" else "" end
+    line_end = ""
+    line_end = "\n" if multiline
+    #this will never happen with the examples given above as it's only run if the :multiline value is true.
     "<#{name} #{style}>#{line_end}"  \
     "#{innerHTML.chomp}#{line_end}"  \
     "</#{name}>\n"
   end
-
 end
