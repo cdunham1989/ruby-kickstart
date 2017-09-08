@@ -29,4 +29,21 @@
 # shared [1,2,3], [3,2,1]            # => [{1=>[true, true], 2=>[true, true], 3=>[true, true]}, [1, 2, 3]]
 
 def shared(a, b)
+  union = {}
+  a.each do |element|
+    union[element] ||= [nil, nil]
+    union[element][0] = true
+    #this is used to add an array for each of the new elements and give it the value [true, nil] and store it inside the hash.
+  end
+
+  b.each do |element|
+    union[element] ||= [nil, nil]
+    union[element][1] = true
+    #this is used to change the 1st index of the array to true or add a new array for any new elements and give it the value [nil, true] and store it inside the hash.
+  end
+
+  results = union.select { |key, value| value == [true, true] }.map { |key, value| key }
+  #this is used to select the [true, true] values from within the hash and map them to an array.
+
+  return union, result.sort
 end
