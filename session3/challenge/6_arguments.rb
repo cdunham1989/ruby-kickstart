@@ -17,3 +17,19 @@
 # match_maker true,  true,  true, true, nil     # => [false, true]
 # match_maker true,  true,  true, 0, nil        # => [false, true]
 
+def match_maker(opp_or_same, *elements)
+  output = []
+  elements.each_slice 2 do |first, second|
+    first = !!first
+    second = !!second
+# this is taking the element and converting it into true or false, using a double bang so that it doesn't change it.
+    result =  if opp_or_same
+                first != second
+              else
+                first == second
+              end
+# this is testing to see if the first parameter is true or false and then depending on what it finds it passes through the if or else parts to do the required check.
+    output << result
+  end
+  output
+end
