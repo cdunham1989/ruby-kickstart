@@ -29,5 +29,19 @@
 # create it from scratch :)
 
 
-def pathify
+def pathify(paths=Hash.new)
+  return paths.map { |path| '/' + path } if paths.is_a? Array
+  #this stops an infinite loop and returns an array of the paths if what it is passed is already an array.
+
+  to_return = []
+  paths.each do |parent_path, child_dirs|
+    parent_path = '/' + parent_path
+    child_paths = pathify(child_dirs)
+    #this creates a hash using what is in child_dirs an calls it child_paths
+    child_paths.each do |child_path|
+      to_return << (parent_path + child_path)
+      #this adds the output from parent path and child_paths together and put it into the array to return it.
+    end
+  end
+  to_return
 end

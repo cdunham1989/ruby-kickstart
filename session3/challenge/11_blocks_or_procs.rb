@@ -30,5 +30,9 @@
 # end
 
 
-def array_init
+def array_init(size=5, &block)
+  block ||= Proc.new { |i| (100 * i).to_s }
+  #this looks to see if there is a block and if not creates a proc with parameter i and sets i to "(100*i)".
+  Array.new(size, &block)
+  #This then creates a new array with the defined size and the block (the new one if one wasn't given, or the one it was originally given)
 end
