@@ -13,5 +13,4 @@ def print_list_in_reverse(list)
   puts list[:data]
 end
 
-#This method returns if there is no list
-#It then moves on to the next part of the list and puts out the data from within.
+#This moves through the list using :next and then as it closes itself it moves back down the list giving out the data from within the list. Clever!
