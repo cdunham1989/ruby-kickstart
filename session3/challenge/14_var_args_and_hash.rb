@@ -21,11 +21,32 @@
 # problem_14 2,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => true
 # problem_14 3,   5, 6, 45, 99, 13, 5, 6,  :problem => :same_ends    # => false
 
-def problem_14
+def problem_14(*parameters)
+  problem = parameters.pop[:problem] if parameters.last.is_a? Hash
+  problem ||= :count_clumps
+  # Here we are testing if there is a hash and if not creating a new one and setting the problem key to :count_clumps.
+
+  return count_clumps(*parameters) if problem == :count_clumps
+  return same_ends(*parameters) if problem == :same_ends
+  #Here we are defining which method to run depending on what the key of the problem is.
 end
 
-def same_ends
+def same_ends(n, *parameters)
+  parameters[0, n] == parameters[-n, n]
 end
 
-def count_clumps
+
+def count_clumps(*numbers)
+  clumps = 0
+  previous = nil
+  two_before = nil
+  #Here we're setting the starting values to compare each of the parts of the hash.
+
+  numbers.each do |number|
+    clumps += 1 if (previous == number) && (previous != two_before)
+    two_before = previous
+    previous = number
+    #Here we're comparing the current number with the previous and incrementing the value of clumps if they are the same and not equal to the value of two_before. Then re-setting the values before looping on to the next number.
+  end
+  clumps
 end

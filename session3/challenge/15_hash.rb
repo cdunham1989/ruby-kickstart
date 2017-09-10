@@ -38,3 +38,15 @@
 # middle head                        # => 3
 # head = {:data => 6, :next => head}
 # middle head                        # => 3
+
+def list_size(list)
+  return 0 unless list
+  1 + list_size(list[:next])
+end
+#Here we're creating a method which sets list size as 0 if there is no list. It also then tells it to increase the list size when a next key is added to the list.
+
+def middle(list, distance=list_size(list)/2)
+  return list[:data] if distance == 0
+  middle list[:next], (distance -1)
+end
+#Here we're defining a method to pick and return the middle value based on the value of list_size and telling it to return :data.

@@ -52,5 +52,17 @@
 #   end
 # end       # => ["a", "m", "r", 1, 3, 4, 9, 2.5, 9.0, 25.8]
 
-def your_sort
+def your_sort( array, &orderblk)
+  orderblk ||= Proc.new { |a, b| a <=> b}
+  #this checks to see if orderer exits and if not sets it to a new proc with parameters a & b. Then uses the <=> operator to compare them with four possible outcomes a<b=-1 (a=b)=0 a>b=1 a not comparible to b=nil.
+
+  array.each_index do |index1|
+    array.each_index do |index2|
+    #These two steps are taking each value from the array and then first putting it into index 1 and then into index 2.
+      order = orderblk.call(array[index1], array[index2])
+      #this step sets their order by putting them into the first line above to be compared.
+      array[index1], array[index2] = array[index2], array[index1] if order < 0
+      #This is saying that if a < b using the first method then to change the order of the values.
+    end
+  end
 end
