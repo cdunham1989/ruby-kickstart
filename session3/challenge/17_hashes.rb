@@ -7,3 +7,11 @@
 #
 # print_list_in_reverse head   # >> "1\n2\n"
 
+def print_list_in_reverse(list)
+  return unless list
+  print_list_in_reverse list[:next]
+  puts list[:data]
+end
+
+#This method returns if there is no list
+#It then moves on to the next part of the list and puts out the data from within.
